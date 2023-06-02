@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
+import { PageContainer, FormContainer } from './styled';
 import logo from '../.././assets/logo.svg';
 
 export default function Cadastro() {
@@ -8,9 +9,15 @@ export default function Cadastro() {
     const [password, setPassword] = useState('');
     const [nome, setNome] = useState('');
     const [foto, setFoto] = useState('');
+    const [statusRequest, setStatusRequest] = useState(false);
+    const [conteudoBotao, setConteudoBotao] = useState('Cadastrar');
+
+    const navegar = useNavigate();
 
     function fazerCadastro(event) {
         event.preventDefault();
+        setStatusRequest(true);
+        setConteudoBotao(<ThreeDots height = "10" color = "white"/>);
         const obj = {
             email: email,
             pasword: password,
@@ -25,9 +32,18 @@ export default function Cadastro() {
 
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', obj);
         requisicao.then(resposta => {
-            console.log(resposta);
+            navegar('/');
+        });
+        requisicao.catch(resposta => {
+            alert(`Não foi possível fazer cadastro! Erro ${resposta.response.data.message}`);
+            setStatusRequest(false);
+            setConteudoBotao('Cadastrar');
         });
         */
+    }
+
+    function irParaLogin() {
+        navegar('/');
     }
 
     return (
@@ -60,47 +76,11 @@ export default function Cadastro() {
                             placeholder='foto' 
                         />
                         <br/>
-                        <button type="submit">Cadastrar</button>
+                        <button type="submit" disabled={statusRequest}>{conteudoBotao}</button>
                     </form>
-                    <Link to={`/`}>
-                        <p>Já tem uma conta? Faça login!</p>
-                    </Link>
                 </FormContainer>
+                <button onClick={irParaLogin} disabled={statusRequest}>Já tem uma conta? Faça login!</button>
             </PageContainer>
         </>
     );
 }
-
-const PageContainer = styled.div`
-    padding-top: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const FormContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    input {
-        box-sizing: border-box;
-        width: calc(100vw - 10em);
-        margin-top: 10px;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        height: 3em;
-    }
-    button {
-        margin-top: 10px;
-        width: 100%;
-        height: 3em;
-        border: none;
-        border-radius: 3px;
-        background: #52B6FF;
-        color: #FFFFFF;
-    }
-    p {
-        color: #52B6FF;
-        text-decoration-line: underline;
-    }
-`

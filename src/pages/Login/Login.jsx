@@ -1,34 +1,41 @@
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
+import { PageContainer, FormContainer } from './styled';
 import logo from '../.././assets/logo.svg';
-import loading from '../.././assets/loading.gif';
-
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [content, setContent] = useState(<img className="load" src={loading} />);
-    const [statusRequest, setStatusRequest] = useState('');
+    const [statusRequest, setStatusRequest] = useState(false);
+    const [conteudoBotao, setConteudoBotao] = useState('Entrar');
 
+    const navegar = useNavigate();
 
     function fazerLogin(event) {
-        console.log('login');
-        /*
         event.preventDefault();
+        console.log('login');
+        setStatusRequest(true);
+        setConteudoBotao(<ThreeDots height = "10" color = "white"/>);
+/*
         const obj = {
             email: email,
             pasword: password
         }
-        const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
-        requisicao.then(resposta => {
-            console.log(resposta);
-        });
-        */
+ 
+            const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
+            requisicao.then(resposta => {
+                navegar('/hoje');
+            });
+            requisicao.catch(resposta => {
+                alert(`Não foi possível fazer login! Erro ${resposta.response.data.message}`);
+                setStatusRequest(false);
+                setConteudoBotao('Entrar');
+            });*/
     }
 
-    function mudar() {
-        setContent('Entrar');
+    function irParaCadastro() {
+        navegar('/cadastro');
     }
 
     return (
@@ -49,51 +56,11 @@ export default function Login() {
                             placeholder='senha' 
                         />
                         <br/>
-                        <button type="submit" disabled={statusRequest}>{content}</button>
+                        <button type="submit" disabled={statusRequest}> {conteudoBotao} </button>
                     </form>
-                    <Link to={`/cadastro`}>
-                        <p>Não tem uma conta? Cadastre-se!</p>
-                    </Link>
                 </FormContainer>
+                <button onClick={(irParaCadastro)} disabled={statusRequest}>Não tem uma conta? Cadastre-se!</button>
             </PageContainer>
         </>
     );
 }
-
-const PageContainer = styled.div`
-    padding-top: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const FormContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    input {
-        box-sizing: border-box;
-        width: calc(100vw - 10em);
-        margin-top: 10px;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        height: 3em;
-    }
-    button {
-        margin-top: 10px;
-        width: 100%;
-        height: 3em;
-        border: none;
-        border-radius: 3px;
-        background: #52B6FF;
-        color: #FFFFFF;
-    }
-    p {
-        color: #52B6FF;
-        text-decoration-line: underline;
-    }
-    .load {
-        width: 30px;
-        height: 25px;
-    }
-`
