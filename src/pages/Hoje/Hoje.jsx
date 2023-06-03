@@ -1,23 +1,49 @@
 import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotoesSubmit, Footer } from './styled';
 import { Link } from 'react-router-dom';
-import perfil from '../.././assets/perfil.jpg';
+import { useState, useEffect } from 'react';
+import Context from '../../Context';
+import { useContext } from 'react';
+import axios from 'axios';
+
 export default function Hoje() {
+    const [info, setInfo] = useContext(Context);
+    const [servidor, setServidor] = useState([]);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${info.data.token}`
+            }
+        }
+        const requisicao = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
+        requisicao.then(resposta =>
+            setServidor(resposta.data));
+        requisicao.catch(resposta =>
+            alert(resposta.response.data.message));
+    }, []);
+
+    console.log(servidor);
+
     return (
         <>
-                <ScreenContainer>
+            <ScreenContainer>
                 <HeaderContainer>
                     <Header>
                         <a>Trackit</a>
-                        <img src={perfil} alt="pfp" />
+                        <img src={info.data.image} alt="pfp" />
                     </Header>
                 </HeaderContainer>
 
                 <Footer>
                     <Link to={'/habitos'}>
-                        <a>Hábitos</a>
+                        <button data-test="habit-link">Hábitos</button>
                     </Link>
-                    <div className='hoje'>Hoje</div>
-                    <a>Histórico</a>
+                    <Link to={'/hoje'}>
+                        <div className='hoje' data-test="today-link">Hoje</div>
+                    </Link>
+                    <Link to={'/historico'}>
+                        <button data-test="history-link">Histórico</button>
+                    </Link>
                 </Footer>
             </ScreenContainer>
         </>

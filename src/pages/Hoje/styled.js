@@ -158,9 +158,12 @@ export const Footer = styled.div`
     gap: 25vw;
     align-items: center;
     justify-content: center;
-    a {
+    button {
+        background: none;
+        border: none;
         color: #52B6FF;
         text-decoration: none;
+        font-size: 16px;
     }
     .hoje {
         display: flex;

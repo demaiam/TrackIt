@@ -28,7 +28,7 @@ export default function Login() {
 
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
         requisicao.then(resposta => {
-            console.log(resposta);
+            setInfo(resposta);
             navegar('/hoje');
         });
         requisicao.catch(resposta => {
@@ -47,14 +47,16 @@ export default function Login() {
                         <input type="email"
                                value={email}
                                onChange={e => setEmail(e.target.value)}
-                               placeholder='email'
+                               placeholder="email"
+                               disabled={statusRequest}
                                data-test="email-input"
                         />
                         <br />
                         <input type="password"
                                value={password}
                                onChange={e => setPassword(e.target.value)}
-                               placeholder='senha'
+                               placeholder="senha"
+                               disabled={statusRequest}
                                data-test="passsword-input"
                         />
                         <br />

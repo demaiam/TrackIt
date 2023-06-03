@@ -39,6 +39,25 @@ export const Header = styled.div`
         border-radius: 50%;
     }
 `
+export const HabitosContainer = styled.div`
+    font-family: 'Lexend Deca', sans-serif;
+    width: 90%;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`
+
+export const Topo = styled.div`
+    a {
+        font-size: 23px;
+        color: #126BA5;
+    }
+    p {
+        font-size: 18px;
+        color: #666666;
+    }
+`
 
 export const Footer = styled.div`
     font-family: 'Lexend Deca', sans-serif;
@@ -52,8 +71,12 @@ export const Footer = styled.div`
     gap: 25vw;
     align-items: center;
     justify-content: center;
-    a {
-        color: #52B6FF
+    button {
+        background: none;
+        border: none;
+        color: #52B6FF;
+        text-decoration: none;
+        font-size: 16px;
     }
     .hoje {
         display: flex;

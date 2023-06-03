@@ -30,9 +30,11 @@ export const HeaderContainer = styled.div`
 `
 
 export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 89%;
+    width: 90%;
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
     img {
         height: 50px;
         width: 50px;
@@ -81,12 +83,14 @@ export const Habito = styled.div`
 `
 
 export const Topo = styled.div`
-    font-size: 22px;
     width: 100%;
+    div {
+    font-size: 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #126BA5;
+    }
     button {
         color: #FFFFFF;
         font-size: 30px;
@@ -120,6 +124,9 @@ export const BotaoDia = styled.div`
     button {
         height: 25px;
         width: 25px;
+        border: ${props => props.selecionado.includes(props.indice) ? '1px solid #FFFFFF' : '1px solid #DBDBDB'};
+        color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
+        background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }
 `
 
@@ -158,8 +165,12 @@ export const Footer = styled.div`
     gap: 25vw;
     align-items: center;
     justify-content: center;
-    a {
-        color: #52B6FF
+    button {
+        background: none;
+        border: none;
+        color: #52B6FF;
+        text-decoration: none;
+        font-size: 16px;
     }
     .hoje {
         display: flex;

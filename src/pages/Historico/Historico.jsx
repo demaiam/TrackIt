@@ -1,23 +1,38 @@
-import { ScreenContainer, HeaderContainer, Header, Footer } from './styled';
+import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Topo, Footer } from './styled';
 import { Link } from 'react-router-dom';
-import perfil from '../.././assets/perfil.jpg';
+import { useContext } from 'react';
+import Context from '../../Context';
+
 export default function Hoje() {
+    const [info] = useContext(Context);
+
     return (
         <>
-                <ScreenContainer>
+            <ScreenContainer>
                 <HeaderContainer>
                     <Header>
                         <a>Trackit</a>
-                        <img src={perfil} alt="pfp" />
+                        <img src={info.data.image} alt="pfp" />
                     </Header>
                 </HeaderContainer>
 
+                <HabitosContainer>
+                    <Topo>
+                        <a>Histórico</a>
+                        <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
+                    </Topo>
+                </HabitosContainer>
+
                 <Footer>
-                    <a>Hábitos</a>
-                    <Link to={`/hoje`}>
-                        <div className='hoje'>Hoje</div>
+                    <Link to={'/habitos'}>
+                        <button data-test="habit-link">Hábitos</button>
                     </Link>
-                    <a>Histórico</a>
+                    <Link to={'/hoje'}>
+                        <div className='hoje' data-test="today-link">Hoje</div>
+                    </Link>
+                    <Link to={'/historico'}>
+                        <button data-test="history-link">Histórico</button>
+                    </Link>
                 </Footer>
             </ScreenContainer>
         </>

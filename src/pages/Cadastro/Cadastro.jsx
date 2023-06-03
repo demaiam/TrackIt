@@ -36,7 +36,6 @@ export default function Cadastro() {
             setStatusRequest(false);
             setConteudoBotao('Cadastrar');
         });
-
     }
 
     return (
@@ -48,28 +47,32 @@ export default function Cadastro() {
                         <input type="email"
                                value={email}
                                onChange={e => setEmail(e.target.value)}
-                               placeholder='email'
+                               placeholder="email"
+                               disabled={statusRequest}
                                data-test="email-input"
                         />
                         <br/>
                         <input type="password"
                                value={password}
                                onChange={e => setPassword(e.target.value)}
-                               placeholder='senha'
+                               placeholder="senha"
+                               disabled={statusRequest}
                                data-test="password-input"
                         />
                         <br/>
                         <input type="text"
                                value={nome}
                                onChange={e => setNome(e.target.value)}
-                               placeholder='nome'
+                               placeholder="nome"
+                               disabled={statusRequest}
                                data-test="user-name-input"
                         />
                         <br/>
                         <input type="url"
                                value={foto}
                                onChange={e => setFoto(e.target.value)}
-                               placeholder='foto'
+                               placeholder="foto"
+                               disabled={statusRequest}
                                data-test="user-image-input"
                         />
                         <br/>
