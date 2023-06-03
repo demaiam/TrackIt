@@ -25,6 +25,7 @@ export const FormContainer = styled.div`
         border: 1px solid #D5D5D5;
         border-radius: 5px;
         height: 3em;
+        padding: 10px;
     }
     button {
         display: flex;

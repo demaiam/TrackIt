@@ -159,7 +159,8 @@ export const Footer = styled.div`
     align-items: center;
     justify-content: center;
     a {
-        color: #52B6FF
+        color: #52B6FF;
+        text-decoration: none;
     }
     .hoje {
         display: flex;

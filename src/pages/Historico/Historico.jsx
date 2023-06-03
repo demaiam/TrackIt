@@ -1,4 +1,4 @@
-import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotoesSubmit, Footer } from './styled';
+import { ScreenContainer, HeaderContainer, Header, Footer } from './styled';
 import { Link } from 'react-router-dom';
 import perfil from '../.././assets/perfil.jpg';
 export default function Hoje() {
@@ -13,10 +13,10 @@ export default function Hoje() {
                 </HeaderContainer>
 
                 <Footer>
-                    <Link to={'/habitos'}>
-                        <a>Hábitos</a>
+                    <a>Hábitos</a>
+                    <Link to={`/hoje`}>
+                        <div className='hoje'>Hoje</div>
                     </Link>
-                    <div className='hoje'>Hoje</div>
                     <a>Histórico</a>
                 </Footer>
             </ScreenContainer>

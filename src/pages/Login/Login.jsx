@@ -3,39 +3,39 @@ import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import { PageContainer, FormContainer } from './styled';
 import logo from '../.././assets/logo.svg';
+import axios from 'axios';
+import Context from '../../Context';
+import { useContext } from 'react';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [statusRequest, setStatusRequest] = useState(false);
     const [conteudoBotao, setConteudoBotao] = useState('Entrar');
+    const [info, setInfo] = useContext(Context);
 
     const navegar = useNavigate();
 
     function fazerLogin(event) {
         event.preventDefault();
-        console.log('login');
         setStatusRequest(true);
-        setConteudoBotao(<ThreeDots height = "10" color = "white"/>);
-/*
+        setConteudoBotao(<ThreeDots height="10" color="white" />);
+
         const obj = {
             email: email,
-            pasword: password
+            password: password
         }
- 
-            const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
-            requisicao.then(resposta => {
-                navegar('/hoje');
-            });
-            requisicao.catch(resposta => {
-                alert(`Não foi possível fazer login! Erro ${resposta.response.data.message}`);
-                setStatusRequest(false);
-                setConteudoBotao('Entrar');
-            });*/
-    }
 
-    function irParaCadastro() {
-        navegar('/cadastro');
+        const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
+        requisicao.then(resposta => {
+            console.log(resposta);
+            navegar('/hoje');
+        });
+        requisicao.catch(resposta => {
+            alert(`Não foi possível fazer login! Erro ${resposta.response.data.message}`);
+            setStatusRequest(false);
+            setConteudoBotao('Entrar');
+        });
     }
 
     return (
@@ -44,22 +44,24 @@ export default function Login() {
                 <img src={logo} alt="logo" />
                 <FormContainer>
                     <form onSubmit={fazerLogin}>
-                        <input type="text"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            placeholder='email' 
+                        <input type="email"
+                               value={email}
+                               onChange={e => setEmail(e.target.value)}
+                               placeholder='email'
+                               data-test="email-input"
                         />
-                        <br/>
-                        <input type="text"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            placeholder='senha' 
+                        <br />
+                        <input type="password"
+                               value={password}
+                               onChange={e => setPassword(e.target.value)}
+                               placeholder='senha'
+                               data-test="passsword-input"
                         />
-                        <br/>
-                        <button type="submit" disabled={statusRequest}> {conteudoBotao} </button>
+                        <br />
+                        <button type="submit" disabled={statusRequest} data-test="login-btn">{conteudoBotao}</button>
                     </form>
                 </FormContainer>
-                <button onClick={(irParaCadastro)} disabled={statusRequest}>Não tem uma conta? Cadastre-se!</button>
+                <button onClick={() => navegar('/cadastro')} disabled={statusRequest} data-test="signup-link">Não tem uma conta? Cadastre-se!</button>
             </PageContainer>
         </>
     );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import perfil from '../.././assets/perfil.jpg';
 import ItemHabito from './ItemHabito';
 import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotoesSubmit, Footer } from './styled';
+import axios from 'axios';
 
 export default function Habitos() {
 
@@ -19,14 +20,14 @@ export default function Habitos() {
         {texto: "Dormir", dias: [3, 4, 5]}
     ];
 
-    /*
+    
     useEffect(() => {
         const requisicao = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', token);
-        requisicao.then(resposta => setHabitos(resposta.data))
+        requisicao.then(resposta => setHabitos(resposta.data));
         requisicao.catch(resposta => alert(resposta.response.data.message));
     }, []);
-    */
 
+    console.log(habitos)
 
     function enviarHabito(event) {
         event.preventDefault();
@@ -34,9 +35,7 @@ export default function Habitos() {
             name: novoHabito,
             days: botoesSelecionados
         }
-        /*
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', token);
-        */
     }
 
     function selecionarDia(id) {
@@ -67,17 +66,17 @@ export default function Habitos() {
     return (
         <>
             <ScreenContainer>
-                <HeaderContainer>
+                <HeaderContainer data-test="header">
                     <Header>
                         <a>Trackit</a>
-                        <img src={perfil} alt="pfp" />
+                        <img src={perfil} alt="pfp" data-test="avatar"/>
                     </Header>
                 </HeaderContainer>
 
-                <HabitosContainer>
+                <HabitosContainer data-test="habit-create-container">
                     <Topo>
                         <a>Meus hábitos</a>
-                        <button onClick={() => adicionarHabito()}>+</button>
+                        <button onClick={() => adicionarHabito()} data-test="habit-create-btn">+</button>
                     </Topo>
 
                     {adicionar
@@ -88,19 +87,21 @@ export default function Habitos() {
                             <input type="text"
                                 value={novoHabito}
                                 onChange={e => setNovoHabito(e.target.value)}
-                                placeholder='nome do habito'/>
+                                placeholder="nome do habito"
+                                data-test="habit-name-input"
+                            />
                             <br />
                             <Botoes>
                                 {semana.map((dia, index) =>
                                     <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
-                                        <button type="button" onClick={() => selecionarDia(index)}>
+                                        <button type="button" onClick={() => selecionarDia(index)} data-test="habit-day">
                                             {dia}
                                         </button>
                                     </BotaoDiaAdd>)}
                             </Botoes>
                             <BotoesSubmit>
-                                <button type="reset">Cancelar</button>
-                                <button type="submit">Salvar</button>
+                                <button type="reset" data-test="habit-create-cancel-btn">Cancelar</button>
+                                <button type="submit" data-test="habit-create-save-btn">Salvar</button>
                             </BotoesSubmit>
                         </form>
                         </Habito>
@@ -119,11 +120,13 @@ export default function Habitos() {
                     </Habito>
                 </HabitosContainer>
                 <Footer>
-                    <a>Hábitos</a>
-                    <Link to={`/hoje`}>
-                        <div className='hoje'>Hoje</div>
+                        <a data-test="habit-link">Hábitos</a>
+                    <Link to={'/hoje'}>
+                        <div className='hoje' data-test="today-link">Hoje</div>
                     </Link>
-                    <a>Histórico</a>
+                    <Link to={'/historico'}>
+                        <a data-test="history-link">Histórico</a>
+                    </Link>
                 </Footer>
             </ScreenContainer>
         </>

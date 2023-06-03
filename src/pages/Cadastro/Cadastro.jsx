@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import { PageContainer, FormContainer } from './styled';
 import logo from '../.././assets/logo.svg';
+import axios from 'axios';
 
 export default function Cadastro() {
     const [email, setEmail] = useState('');
@@ -20,30 +21,22 @@ export default function Cadastro() {
         setConteudoBotao(<ThreeDots height = "10" color = "white"/>);
         const obj = {
             email: email,
-            pasword: password,
             name: nome,
-            image: foto
+            image: foto,
+            password: password
         }
         console.log(obj);
-        /*
-        
-
-
-
+    
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', obj);
         requisicao.then(resposta => {
             navegar('/');
         });
         requisicao.catch(resposta => {
-            alert(`Não foi possível fazer cadastro! Erro ${resposta.response.data.message}`);
+            alert(`Não foi possível fazer cadastro! ${resposta.response.data.message}`);
             setStatusRequest(false);
             setConteudoBotao('Cadastrar');
         });
-        */
-    }
 
-    function irParaLogin() {
-        navegar('/');
     }
 
     return (
@@ -52,34 +45,38 @@ export default function Cadastro() {
                 <img src={logo} alt="logo" />
                 <FormContainer>
                     <form onSubmit={fazerCadastro}>
-                        <input type="text"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            placeholder='email' 
+                        <input type="email"
+                               value={email}
+                               onChange={e => setEmail(e.target.value)}
+                               placeholder='email'
+                               data-test="email-input"
+                        />
+                        <br/>
+                        <input type="password"
+                               value={password}
+                               onChange={e => setPassword(e.target.value)}
+                               placeholder='senha'
+                               data-test="password-input"
                         />
                         <br/>
                         <input type="text"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            placeholder='senha' 
-                        />
-                        <br/>
-                        <input type="text"
-                            value={nome}
-                            onChange={e => setNome(e.target.value)}
-                            placeholder='nome' 
+                               value={nome}
+                               onChange={e => setNome(e.target.value)}
+                               placeholder='nome'
+                               data-test="user-name-input"
                         />
                         <br/>
                         <input type="url"
-                            value={foto}
-                            onChange={e => setFoto(e.target.value)}
-                            placeholder='foto' 
+                               value={foto}
+                               onChange={e => setFoto(e.target.value)}
+                               placeholder='foto'
+                               data-test="user-image-input"
                         />
                         <br/>
-                        <button type="submit" disabled={statusRequest}>{conteudoBotao}</button>
+                        <button type="submit" disabled={statusRequest} data-test="signup-btn">{conteudoBotao}</button>
                     </form>
                 </FormContainer>
-                <button onClick={irParaLogin} disabled={statusRequest}>Já tem uma conta? Faça login!</button>
+                <button onClick={() => navegar('/')} disabled={statusRequest} data-test="login-link">Já tem uma conta? Faça login!</button>
             </PageContainer>
         </>
     );
