@@ -128,8 +128,8 @@ export default function Habitos() {
                         )}
 
                     {habitos.map((h, index) => (
-                        <div className="container-habito" data-test="habit-container">
-                            <Habito key={index}>
+                        <div className="container-habito" data-test="habit-container" key={index}>
+                            <Habito>
                                 <a data-test="habit-name">{h.name}</a>
                                 <Botoes>
                                     {semana.map((dia, index) =>
@@ -146,15 +146,17 @@ export default function Habitos() {
 
                 </HabitosContainer>
                 <Footer>
-                    <Link to={'/habitos'}>
-                        <button data-test="habit-link">Hábitos</button>
-                    </Link>
-                    <Link to={'/hoje'}>
-                        <div className='hoje' data-test="today-link">Hoje</div>
-                    </Link>
-                    <Link to={'/historico'}>
-                        <button data-test="history-link">Histórico</button>
-                    </Link>
+                    <div data-test="menu">
+                        <Link to={'/habitos'}>
+                            <button data-test="habit-link">Hábitos</button>
+                        </Link>
+                        <Link to={'/hoje'}>
+                            <div className='hoje' data-test="today-link">Hoje</div>
+                        </Link>
+                        <Link to={'/historico'}>
+                            <button data-test="history-link">Histórico</button>
+                        </Link>
+                    </div>
                 </Footer>
             </ScreenContainer>
         </>

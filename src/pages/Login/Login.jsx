@@ -57,7 +57,7 @@ export default function Login() {
                                onChange={e => setPassword(e.target.value)}
                                placeholder="senha"
                                disabled={statusRequest}
-                               data-test="passsword-input"
+                               data-test="password-input"
                         />
                         <br />
                         <button type="submit" disabled={statusRequest} data-test="login-btn">{conteudoBotao}</button>

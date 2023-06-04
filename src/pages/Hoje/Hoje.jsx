@@ -54,12 +54,10 @@ export default function Hoje() {
         requisicao.then(resposta => {
             let qtd = 0;
             for (let i = 0; i < resposta.data.length; i++) {
-                console.log(i)
                 if (resposta.data[i].done == true)
                     qtd += 1;
             }
             if (qtd != 0) {
-                console.log('oi')
                 const porcentagem = Math.round(qtd * 100 / habitos.length);
                 setQtdConcluidos(qtd);
                 setConcluidos(`${porcentagem}% dos hábitos concluidos`);
@@ -104,8 +102,10 @@ export default function Hoje() {
             <ScreenContainer>
                 <HeaderContainer>
                     <Header>
+                    <div data-test="header">
                         <a>Trackit</a>
-                        <img src={info.data.image} alt="pfp" />
+                        <img src={info.data.image} alt="pfp" data-test="avatar"/>
+                    </div>
                     </Header>
                 </HeaderContainer>
 
@@ -132,15 +132,17 @@ export default function Hoje() {
                 </HabitosContainer>
 
                 <Footer>
-                    <Link to={'/habitos'}>
-                        <button data-test="habit-link">Hábitos</button>
-                    </Link>
-                    <Link to={'/hoje'}>
-                        <div className='hoje' data-test="today-link">Hoje</div>
-                    </Link>
-                    <Link to={'/historico'}>
-                        <button data-test="history-link">Histórico</button>
-                    </Link>
+                    <div data-test="menu">
+                        <Link to={'/habitos'}>
+                            <button data-test="habit-link">Hábitos</button>
+                        </Link>
+                        <Link to={'/hoje'}>
+                            <div className='hoje' data-test="today-link">Hoje</div>
+                        </Link>
+                        <Link to={'/historico'}>
+                            <button data-test="history-link">Histórico</button>
+                        </Link>
+                    </div>
                 </Footer>
             </ScreenContainer>
         </>

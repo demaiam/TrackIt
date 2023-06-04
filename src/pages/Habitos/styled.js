@@ -165,9 +165,12 @@ export const Footer = styled.div`
     height: 65px;
     background-color: #FFFFFF;
     display: flex;
-    gap: 25vw;
     align-items: center;
     justify-content: center;
+    div {
+        display: flex;
+        gap: 20vw;
+    }
     button {
         background: none;
         border: none;
