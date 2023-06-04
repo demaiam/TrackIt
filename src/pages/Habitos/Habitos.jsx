@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import Context from '../../Context';
 import lixeira from '../.././assets/lixeira.png';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function Habitos() {
 
@@ -89,6 +90,17 @@ export default function Habitos() {
         }
     }
 
+    console.log(habitos)
+
+    if (habitos.length == 0) {
+        return (
+            <>
+                <ThreeDots height="100vh" width="100vw" color="#52B6FF" />
+            </>
+        )
+
+    }
+
     return (
         <>
             <ScreenContainer>
@@ -141,14 +153,14 @@ export default function Habitos() {
                         )}
 
                     {habitos.map((h, index) => (
-                        <div className="container-habito" data-test="habit-container" key={index}>
+                        <div className="container-habito" data-test="habit-container" key={h.id}>
                             <Habito>
                                 <a data-test="habit-name">{h.name}</a>
                                 <Botoes>
                                     {semana.map((dia, index) =>
                                         <BotaoDia indice={index} selecionado={h.days} key={index}>
                                             <button type="button" disabled={true} data-test="habit-day">
-                                                {semana[index]}
+                                                {dia}
                                             </button>
                                         </BotaoDia>)}
                                 </Botoes>

@@ -5,7 +5,7 @@ import Context from '../../Context';
 import { useContext } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { ThreeCircles } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function Hoje() {
     const [info] = useContext(Context);
@@ -16,7 +16,7 @@ export default function Hoje() {
 
     let diaSemana = dayjs().day();
     let diaMes = dayjs().date();
-    let mes = dayjs().month();
+    let mes = dayjs().month() + 1;
 
     if (diaMes < 10)
         diaMes = diaMes.toString().padStart(2, 0);
@@ -100,6 +100,15 @@ export default function Hoje() {
         setQtdConcluidos(qtdConcluidos + num);
         const porcentagem = Math.round(qtdConcluidos * 100 / habitos.length);
         setConcluidos(`${porcentagem}% dos hábitos concluidos`);
+    }
+
+    if (habitos.length == 0) {
+        return (
+            <>
+                <ThreeDots height="100vh" width="100vw" color="#52B6FF" />
+            </>
+        )
+
     }
 
     return (
