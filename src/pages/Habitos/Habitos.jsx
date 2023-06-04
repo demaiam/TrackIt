@@ -14,7 +14,7 @@ export default function Habitos() {
     const [adicionar, setAdicionar] = useState(false);
     const [habilitado, setHabilitado] = useState(false);
     const semana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-    
+
 
     const [info] = useContext(Context);
     const token = info.data.token;
@@ -45,11 +45,13 @@ export default function Habitos() {
         }
         setHabilitado(true);
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', obj, config);
-        requisicao.then(resposta => {
+        requisicao.then(() => {
+            const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
+            requisicao2.then(resposta2 =>
+                setHabitos(resposta2.data));
+            requisicao2.catch(resposta2 =>
+                alert(resposta2.response.data.message));
             setAdicionar(false);
-            const novoArr = [...habitos];
-            novoArr.push(resposta.data);
-            setHabitos(novoArr);
         });
         requisicao.catch(resposta => {
             alert(resposta.data.message);
@@ -71,18 +73,15 @@ export default function Habitos() {
         }
     }
 
-    function apagarForm() {
-        setNovoHabito('');
-        setBotoesSelecionados([]);
-    }
-
-    function deletarHabito(h, indice) {
+    function deletarHabito(h) {
         if (confirm("Tem certeza que deseja apagar o hábito?") == true) {
             const requisicao = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
             requisicao.then(resposta => {
-                const novoArr = [...habitos];
-                delete novoArr[indice];
-                setHabitos(novoArr);
+                const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
+                requisicao2.then(resposta2 =>
+                    setHabitos(resposta2.data));
+                requisicao2.catch(resposta2 =>
+                    alert(resposta2.response.data.message));
             });
             requisicao.catch(resposta => {
                 alert(`Erro ao deletar Hábito! ${resposta.response.data.message}`);
