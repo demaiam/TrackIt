@@ -117,9 +117,10 @@ export const Botoes = styled.div`
 export const BotaoDiaAdd = styled.div`
     display: flex;
     button {
+        border-radius: 5px;
         height: 25px;
         width: 25px;
-        border: ${props => props.selecionado.includes(props.indice) ? '1px solid #FFFFFF' : '1px solid #DBDBDB'};
+        border: ${props => props.selecionado.includes(props.indice) ? 'none': '1px solid #DBDBDB'};
         color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
         background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }
@@ -128,9 +129,10 @@ export const BotaoDiaAdd = styled.div`
 export const BotaoDia = styled.div`
     display: flex;
     button {
+        border-radius: 5px;
         height: 25px;
         width: 25px;
-        border: 1px solid #DBDBDB;
+        border: ${props => props.selecionado.includes(props.indice) ? 'none': '1px solid #DBDBDB'};
         color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
         background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }

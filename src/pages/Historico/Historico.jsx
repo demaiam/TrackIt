@@ -11,8 +11,10 @@ export default function Hoje() {
             <ScreenContainer>
                 <HeaderContainer>
                     <Header>
+                    <div data-test="header">
                         <a>Trackit</a>
-                        <img src={info.data.image} alt="pfp" />
+                        <img src={info.data.image} alt="pfp" data-test="avatar"/>
+                    </div>
                     </Header>
                 </HeaderContainer>
 
@@ -24,15 +26,17 @@ export default function Hoje() {
                 </HabitosContainer>
 
                 <Footer>
-                    <Link to={'/habitos'}>
-                        <button data-test="habit-link">Hábitos</button>
-                    </Link>
-                    <Link to={'/hoje'}>
-                        <div className='hoje' data-test="today-link">Hoje</div>
-                    </Link>
-                    <Link to={'/historico'}>
-                        <button data-test="history-link">Histórico</button>
-                    </Link>
+                    <div data-test="menu">
+                        <Link to={'/habitos'}>
+                            <button data-test="habit-link">Hábitos</button>
+                        </Link>
+                        <Link to={'/hoje'}>
+                            <div className='hoje' data-test="today-link">Hoje</div>
+                        </Link>
+                        <Link to={'/historico'}>
+                            <button data-test="history-link">Histórico</button>
+                        </Link>
+                    </div>
                 </Footer>
             </ScreenContainer>
         </>

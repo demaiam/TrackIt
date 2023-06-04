@@ -18,6 +18,11 @@ export default function Hoje() {
     let diaMes = dayjs().date();
     let mes = dayjs().month();
 
+    if (diaMes < 10)
+        diaMes = diaMes.toString().padStart(2, 0);
+    if (mes < 10)
+        mes = mes.toString().padStart(2, 0);
+
 
     switch (diaSemana) {
         case 0:
@@ -117,11 +122,11 @@ export default function Hoje() {
                     </Topo>
 
                     {habitos.map((h, index) => (
-                        <div className="habito-container" data-test="today-habit-container">
-                            <Habito key={index}>
+                        <div className="habito-container" data-test="today-habit-container" key={index}>
+                            <Habito recorde={h.highestSequence} sequencia={h.currentSequence}>
                                 <p data-test="today-habit-name">{h.name}</p>
-                                <p data-tets="todat-habit-sequence">Sequência atual: {h.currentSequence}</p>
-                                <p data-test="today-habit-record">Seu recorde: {h.highestSequence}</p>
+                                <p data-tets="today-habit-sequence">Sequência atual: <span>{h.currentSequence}</span></p>
+                                <p data-test="today-habit-record">Seu recorde: <span>{h.highestSequence}</span></p>
                                 <BotaoCheck status={h.done}>
                                     <button onClick={() => habitoFeito(h.id, h.done, index)} data-test="today-habit-check-btn">✓</button>
                                 </BotaoCheck>

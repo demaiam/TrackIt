@@ -72,6 +72,9 @@ export const Habito = styled.div`
         font-size: 13px;
         line-height: 1px;
     }
+    span {
+        color: ${ props => props.recorde == props.sequencia ? '#8FC549' : '#666666'};
+    }
 `
 
 export const BotaoCheck = styled.div`

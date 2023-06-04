@@ -12,7 +12,9 @@ export default function Habitos() {
     const [novoHabito, setNovoHabito] = useState('');
     const [botoesSelecionados, setBotoesSelecionados] = useState([]);
     const [adicionar, setAdicionar] = useState(false);
+    const [habilitado, setHabilitado] = useState(false);
     const semana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    
 
     const [info] = useContext(Context);
     const token = info.data.token;
@@ -37,6 +39,11 @@ export default function Habitos() {
             name: novoHabito,
             days: botoesSelecionados
         }
+        if (obj.name == '') {
+            alert('Campo vazio!');
+            return;
+        }
+        setHabilitado(true);
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', obj, config);
         requisicao.then(resposta => {
             setAdicionar(false);
@@ -44,6 +51,10 @@ export default function Habitos() {
             novoArr.push(resposta.data);
             setHabitos(novoArr);
         });
+        requisicao.catch(resposta => {
+            alert(resposta.data.message);
+        })
+        setHabilitado(false);
         setNovoHabito('');
         setBotoesSelecionados([]);
     }
@@ -104,25 +115,26 @@ export default function Habitos() {
                         (
                             <div className="menu-add" data-test="habit-create-container">
                                 <Habito>
-                                    <form onSubmit={enviarHabito} onReset={apagarForm}>
+                                    <form onSubmit={enviarHabito}>
                                         <input type="text"
                                             value={novoHabito}
                                             onChange={e => setNovoHabito(e.target.value)}
                                             placeholder="nome do habito"
                                             data-test="habit-name-input"
+                                            disabled={habilitado}
                                         />
                                         <br />
                                         <Botoes>
                                             {semana.map((dia, index) =>
                                                 <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
-                                                    <button type="button" onClick={() => selecionarDia(index)} data-test="habit-day">
+                                                    <button type="button" onClick={() => selecionarDia(index)} disabled={habilitado} data-test="habit-day">
                                                         {dia}
                                                     </button>
                                                 </BotaoDiaAdd>)}
                                         </Botoes>
                                         <BotoesSubmit>
-                                            <button type="reset" data-test="habit-create-cancel-btn">Cancelar</button>
-                                            <button type="submit" data-test="habit-create-save-btn">Salvar</button>
+                                            <button type="button" data-test="habit-create-cancel-btn" onClick={() => setAdicionar(!adicionar)} disabled={habilitado}>Cancelar</button>
+                                            <button type="submit" data-test="habit-create-save-btn" disabled={habilitado}>Salvar</button>
                                         </BotoesSubmit>
                                     </form>
                                 </Habito>

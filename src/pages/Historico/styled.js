@@ -30,9 +30,11 @@ export const HeaderContainer = styled.div`
 `
 
 export const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 89%;
+    width: 90%;
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
     img {
         height: 50px;
         width: 50px;
@@ -68,9 +70,12 @@ export const Footer = styled.div`
     height: 65px;
     background-color: #FFFFFF;
     display: flex;
-    gap: 25vw;
     align-items: center;
     justify-content: center;
+    div {
+        display: flex;
+        gap: 20vw;
+    }
     button {
         background: none;
         border: none;
