@@ -98,92 +98,91 @@ export default function Habitos() {
                 <ThreeDots height="100vh" width="100vw" color="#52B6FF" />
             </>
         )
+    } else {
+        return (
+            <>
+                <ScreenContainer>
+                    <HeaderContainer>
+                        <Header>
+                            <div data-test="header">
+                                <a>Trackit</a>
+                                <img src={info.data.image} alt="pfp" data-test="avatar" />
+                            </div>
+                        </Header>
+                    </HeaderContainer>
 
-    }
+                    <HabitosContainer>
+                        <Topo>
+                            <div>
+                                <a>Meus hábitos</a>
+                                <button onClick={() => setAdicionar(!adicionar)} data-test="habit-create-btn">+</button>
+                            </div>
+                        </Topo>
 
-    return (
-        <>
-            <ScreenContainer>
-                <HeaderContainer>
-                    <Header>
-                        <div data-test="header">
-                            <a>Trackit</a>
-                            <img src={info.data.image} alt="pfp" data-test="avatar" />
-                        </div>
-                    </Header>
-                </HeaderContainer>
+                        {adicionar
+                            &&
+                            (
+                                <div className="menu-add" data-test="habit-create-container">
+                                    <Habito>
+                                        <form onSubmit={enviarHabito}>
+                                            <input type="text"
+                                                value={novoHabito}
+                                                onChange={e => setNovoHabito(e.target.value)}
+                                                placeholder="nome do habito"
+                                                data-test="habit-name-input"
+                                                disabled={habilitado}
+                                            />
+                                            <br />
+                                            <Botoes>
+                                                {semana.map((dia, index) =>
+                                                    <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
+                                                        <button type="button" onClick={() => selecionarDia(index)} disabled={habilitado} data-test="habit-day">
+                                                            {dia}
+                                                        </button>
+                                                    </BotaoDiaAdd>)}
+                                            </Botoes>
+                                            <BotoesSubmit>
+                                                <button type="button" data-test="habit-create-cancel-btn" onClick={() => setAdicionar(!adicionar)} disabled={habilitado}>Cancelar</button>
+                                                <button type="submit" data-test="habit-create-save-btn" disabled={habilitado}>Salvar</button>
+                                            </BotoesSubmit>
+                                        </form>
+                                    </Habito>
+                                </div>
+                            )}
 
-                <HabitosContainer>
-                    <Topo>
-                        <div>
-                            <a>Meus hábitos</a>
-                            <button onClick={() => setAdicionar(!adicionar)} data-test="habit-create-btn">+</button>
-                        </div>
-                    </Topo>
-
-                    {adicionar
-                        &&
-                        (
-                            <div className="menu-add" data-test="habit-create-container">
+                        {habitos.map((h, index) => (
+                            <div className="container-habito" data-test="habit-container" key={h.id}>
                                 <Habito>
-                                    <form onSubmit={enviarHabito}>
-                                        <input type="text"
-                                            value={novoHabito}
-                                            onChange={e => setNovoHabito(e.target.value)}
-                                            placeholder="nome do habito"
-                                            data-test="habit-name-input"
-                                            disabled={habilitado}
-                                        />
-                                        <br />
-                                        <Botoes>
-                                            {semana.map((dia, index) =>
-                                                <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
-                                                    <button type="button" onClick={() => selecionarDia(index)} disabled={habilitado} data-test="habit-day">
-                                                        {dia}
-                                                    </button>
-                                                </BotaoDiaAdd>)}
-                                        </Botoes>
-                                        <BotoesSubmit>
-                                            <button type="button" data-test="habit-create-cancel-btn" onClick={() => setAdicionar(!adicionar)} disabled={habilitado}>Cancelar</button>
-                                            <button type="submit" data-test="habit-create-save-btn" disabled={habilitado}>Salvar</button>
-                                        </BotoesSubmit>
-                                    </form>
+                                    <a data-test="habit-name">{h.name}</a>
+                                    <Botoes>
+                                        {semana.map((dia, index) =>
+                                            <BotaoDia indice={index} selecionado={h.days} key={index}>
+                                                <button type="button" disabled={true} data-test="habit-day">
+                                                    {dia}
+                                                </button>
+                                            </BotaoDia>)}
+                                    </Botoes>
+                                    <img src={lixeira} alt="lixeira" onClick={() => deletarHabito(h, index)} data-test="habit-delete-btn" />
                                 </Habito>
                             </div>
-                        )}
+                        ))}
 
-                    {habitos.map((h, index) => (
-                        <div className="container-habito" data-test="habit-container" key={h.id}>
-                            <Habito>
-                                <a data-test="habit-name">{h.name}</a>
-                                <Botoes>
-                                    {semana.map((dia, index) =>
-                                        <BotaoDia indice={index} selecionado={h.days} key={index}>
-                                            <button type="button" disabled={true} data-test="habit-day">
-                                                {dia}
-                                            </button>
-                                        </BotaoDia>)}
-                                </Botoes>
-                                <img src={lixeira} alt="lixeira" onClick={() => deletarHabito(h, index)} data-test="habit-delete-btn" />
-                            </Habito>
+                    </HabitosContainer>
+                    <Footer>
+                        <div data-test="menu">
+                            <Link to={'/habitos'}>
+                                <button data-test="habit-link">Hábitos</button>
+                            </Link>
+                            <Link to={'/hoje'}>
+                                <div className='hoje' data-test="today-link">Hoje</div>
+                            </Link>
+                            <Link to={'/historico'}>
+                                <button data-test="history-link">Histórico</button>
+                            </Link>
                         </div>
-                    ))}
-
-                </HabitosContainer>
-                <Footer>
-                    <div data-test="menu">
-                        <Link to={'/habitos'}>
-                            <button data-test="habit-link">Hábitos</button>
-                        </Link>
-                        <Link to={'/hoje'}>
-                            <div className='hoje' data-test="today-link">Hoje</div>
-                        </Link>
-                        <Link to={'/historico'}>
-                            <button data-test="history-link">Histórico</button>
-                        </Link>
-                    </div>
-                </Footer>
-            </ScreenContainer>
-        </>
-    );
+                    </Footer>
+                </ScreenContainer>
+            </>
+        );
+    }
 }
