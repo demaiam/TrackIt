@@ -58,14 +58,14 @@ export default function Hoje() {
                     qtd += 1;
             }
             if (qtd != 0) {
-                const porcentagem = Math.round(qtd * 100 / habitos.length);
+                const porcentagem = Math.round(qtd * 100 / resposta.data.length);
                 setQtdConcluidos(qtd);
                 setConcluidos(`${porcentagem}% dos hábitos concluidos`);
             }
             setHabitos(resposta.data);
         });
         requisicao.catch(resposta =>
-            alert(`Não foi possível carregar os hábitos! ${resposta.response.data.message}`));
+            alert(resposta.response.data.message));
     }, []);
 
 
@@ -90,7 +90,7 @@ export default function Hoje() {
 
     function auxFunc(num, indice) {
         const novoArr = [...habitos];
-        novoArr[indice].done = false;
+        novoArr[indice].done = !(novoArr[indice].done);
         setHabitos(novoArr);
         setQtdConcluidos(qtdConcluidos + num);
         const porcentagem = Math.round(qtdConcluidos * 100 / habitos.length);

@@ -93,7 +93,7 @@ export default function Habitos() {
 
                 <HabitosContainer>
                     <Topo>
-                        <div data-test="habit-create-container">
+                        <div>
                             <a>Meus hábitos</a>
                             <button onClick={() => setAdicionar(!adicionar)} data-test="habit-create-btn">+</button>
                         </div>
@@ -102,29 +102,31 @@ export default function Habitos() {
                     {adicionar
                         &&
                         (
-                            <Habito>
-                                <form onSubmit={enviarHabito} onReset={apagarForm}>
-                                    <input type="text"
-                                        value={novoHabito}
-                                        onChange={e => setNovoHabito(e.target.value)}
-                                        placeholder="nome do habito"
-                                        data-test="habit-name-input"
-                                    />
-                                    <br />
-                                    <Botoes>
-                                        {semana.map((dia, index) =>
-                                            <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
-                                                <button type="button" onClick={() => selecionarDia(index)} data-test="habit-day">
-                                                    {dia}
-                                                </button>
-                                            </BotaoDiaAdd>)}
-                                    </Botoes>
-                                    <BotoesSubmit>
-                                        <button type="reset" data-test="habit-create-cancel-btn">Cancelar</button>
-                                        <button type="submit" data-test="habit-create-save-btn">Salvar</button>
-                                    </BotoesSubmit>
-                                </form>
-                            </Habito>
+                            <div className="menu-add" data-test="habit-create-container">
+                                <Habito>
+                                    <form onSubmit={enviarHabito} onReset={apagarForm}>
+                                        <input type="text"
+                                            value={novoHabito}
+                                            onChange={e => setNovoHabito(e.target.value)}
+                                            placeholder="nome do habito"
+                                            data-test="habit-name-input"
+                                        />
+                                        <br />
+                                        <Botoes>
+                                            {semana.map((dia, index) =>
+                                                <BotaoDiaAdd indice={index} selecionado={botoesSelecionados} key={index}>
+                                                    <button type="button" onClick={() => selecionarDia(index)} data-test="habit-day">
+                                                        {dia}
+                                                    </button>
+                                                </BotaoDiaAdd>)}
+                                        </Botoes>
+                                        <BotoesSubmit>
+                                            <button type="reset" data-test="habit-create-cancel-btn">Cancelar</button>
+                                            <button type="submit" data-test="habit-create-save-btn">Salvar</button>
+                                        </BotoesSubmit>
+                                    </form>
+                                </Habito>
+                            </div>
                         )}
 
                     {habitos.map((h, index) => (

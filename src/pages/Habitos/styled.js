@@ -52,6 +52,9 @@ export const HabitosContainer = styled.div`
     .container-habito {
         width: 100%;
     }
+    .menu-add {
+        width: 100%;
+    }
 `
 
 export const Habito = styled.div`
