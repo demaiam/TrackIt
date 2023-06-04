@@ -47,6 +47,9 @@ export const HabitosContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    .habito-container {
+        width: 100%;
+    }
 `
 
 export const Habito = styled.div`
@@ -58,25 +61,30 @@ export const Habito = styled.div`
     background: #FFFFFF;
     border-radius: 5px;
     margin-top: 15px;
-    input {
-        font-size: 15px;
-        width: 99%;
-        height: 2em;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-    }
-    input::placeholder {
-        color: #DBDBDB;
-    }
-    a {
+    p:nth-child(1) {
         color: #666666;
+        font-size: 20px;
     }
-    img {
-        position: absolute;
-        display: flex;
-        align-self: flex-end;
-        width: 13px;
-        height: 15px;
+    p {
+        color: #666666;
+        font-size: 13px;
+        line-height: 1px;
+    }
+`
+
+export const BotaoCheck = styled.div`
+    position: absolute;
+    display: flex;
+    align-self: flex-end;
+    margin-top: 13px;
+    button {
+        color: #FFFFFF;
+        font-size: 40px;
+        width: 70px;
+        height: 70px;
+        background-color: ${ props => props.status ? '#8FC549' : '#EBEBEB'};
+        border: none;
+        border-radius: 5px;
     }
 `
 
@@ -84,17 +92,15 @@ export const Topo = styled.div`
     font-size: 22px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #126BA5;
-    button {
-        color: #FFFFFF;
-        font-size: 30px;
-        width: 40px;
-        height: 35px;
-        border-radius: 3px; 
-        background: #52B6FF;
-        border: none;
+    flex-direction: column;
+    align-items: flex-start;
+    a:nth-child(1) {
+        font-size: 23px;
+        color: #126BA5;
+    }
+    a:nth-child(2) {
+        font-size: 18px;
+        color: ${props => props.status == 0 ? '#BABABA' : '#8FC549'};
     }
 `
 
@@ -123,7 +129,7 @@ export const BotaoDia = styled.div`
     }
 `
 
- export const BotoesSubmit = styled.div`
+export const BotoesSubmit = styled.div`
     margin-top: 30px;
     display: flex;
     justify-content: flex-end;

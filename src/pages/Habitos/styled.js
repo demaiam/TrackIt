@@ -49,6 +49,9 @@ export const HabitosContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    .container-habito {
+        width: 100%;
+    }
 `
 
 export const Habito = styled.div`
@@ -85,11 +88,11 @@ export const Habito = styled.div`
 export const Topo = styled.div`
     width: 100%;
     div {
-    font-size: 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #126BA5;
+        font-size: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #126BA5;
     }
     button {
         color: #FFFFFF;
@@ -104,8 +107,8 @@ export const Topo = styled.div`
 
 export const Botoes = styled.div`
     display: flex;
-    margin-top: 10px;
     gap: 5px;
+    margin-top: 10px;
 `
 
 export const BotaoDiaAdd = styled.div`
@@ -124,13 +127,13 @@ export const BotaoDia = styled.div`
     button {
         height: 25px;
         width: 25px;
-        border: ${props => props.selecionado.includes(props.indice) ? '1px solid #FFFFFF' : '1px solid #DBDBDB'};
+        border: 1px solid #DBDBDB;
         color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
         background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }
 `
 
- export const BotoesSubmit = styled.div`
+export const BotoesSubmit = styled.div`
     margin-top: 30px;
     display: flex;
     justify-content: flex-end;

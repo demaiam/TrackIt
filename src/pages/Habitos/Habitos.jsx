@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import ItemHabito from './ItemHabito';
-import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotoesSubmit, Footer } from './styled';
+import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotaoDia, BotoesSubmit, Footer } from './styled';
 import axios from 'axios';
 import { useContext } from 'react';
 import Context from '../../Context';
+import lixeira from '../.././assets/lixeira.png';
 
 export default function Habitos() {
 
@@ -14,7 +14,7 @@ export default function Habitos() {
     const [adicionar, setAdicionar] = useState(false);
     const semana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
-    const [info, setInfo] = useContext(Context);
+    const [info] = useContext(Context);
     const token = info.data.token;
 
     const config = {
@@ -30,7 +30,6 @@ export default function Habitos() {
         requisicao.catch(resposta =>
             alert(resposta.response.data.message));
     }, []);
-
 
     function enviarHabito(event) {
         event.preventDefault();
@@ -61,13 +60,23 @@ export default function Habitos() {
         }
     }
 
-    function adicionarHabito() {
-        setAdicionar(!adicionar);
-    }
-
     function apagarForm() {
         setNovoHabito('');
         setBotoesSelecionados([]);
+    }
+
+    function deletarHabito(h, indice) {
+        if (confirm("Tem certeza que deseja apagar o hábito?") == true) {
+            const requisicao = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
+            requisicao.then(resposta => {
+                const novoArr = [...habitos];
+                delete novoArr[indice];
+                setHabitos(novoArr);
+            });
+            requisicao.catch(resposta => {
+                alert(`Erro ao deletar Hábito! ${resposta.response.data.message}`);
+            });
+        }
     }
 
     return (
@@ -86,7 +95,7 @@ export default function Habitos() {
                     <Topo>
                         <div data-test="habit-create-container">
                             <a>Meus hábitos</a>
-                            <button onClick={() => adicionarHabito()} data-test="habit-create-btn">+</button>
+                            <button onClick={() => setAdicionar(!adicionar)} data-test="habit-create-btn">+</button>
                         </div>
                     </Topo>
 
@@ -119,7 +128,20 @@ export default function Habitos() {
                         )}
 
                     {habitos.map((h, index) => (
-                        <ItemHabito texto={h.name} dias={h.days} key={index} id={h.id}/>
+                        <div className="container-habito" data-test="habit-container">
+                            <Habito key={index}>
+                                <a data-test="habit-name">{h.name}</a>
+                                <Botoes>
+                                    {semana.map((dia, index) =>
+                                        <BotaoDia indice={index} selecionado={h.days} key={index}>
+                                            <button type="button" disabled={true} data-test="habit-day">
+                                                {semana[index]}
+                                            </button>
+                                        </BotaoDia>)}
+                                </Botoes>
+                                <img src={lixeira} alt="lixeira" onClick={() => deletarHabito(h, index)} data-test="habit-delete-btn" />
+                            </Habito>
+                        </div>
                     ))}
 
                 </HabitosContainer>
