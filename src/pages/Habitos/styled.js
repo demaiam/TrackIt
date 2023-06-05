@@ -90,13 +90,11 @@ export const Habito = styled.div`
 
 export const Topo = styled.div`
     width: 100%;
-    div {
-        font-size: 22px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #126BA5;
-    }
+    font-size: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #126BA5;
     button {
         color: #FFFFFF;
         font-size: 30px;
@@ -120,7 +118,7 @@ export const BotaoDiaAdd = styled.div`
         border-radius: 5px;
         height: 25px;
         width: 25px;
-        border: ${props => props.selecionado.includes(props.indice) ? 'none': '1px solid #DBDBDB'};
+        border: ${props => props.selecionado.includes(props.indice) ? 'none' : '1px solid #DBDBDB'};
         color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
         background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }
@@ -132,7 +130,7 @@ export const BotaoDia = styled.div`
         border-radius: 5px;
         height: 25px;
         width: 25px;
-        border: ${props => props.selecionado.includes(props.indice) ? 'none': '1px solid #DBDBDB'};
+        border: ${props => props.selecionado.includes(props.indice) ? 'none' : '1px solid #DBDBDB'};
         color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
         background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
     }
