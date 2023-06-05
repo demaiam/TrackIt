@@ -5,13 +5,17 @@ import Context from '../../Context';
 import { useContext } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
-export default function Hoje() {
+
+export default function Hoje(props) {
     const [info] = useContext(Context);
+    const [porcentagemInfo, setPorcentagemInfo] = useState(0);
     const [habitos, setHabitos] = useState([]);
     const [concluidos, setConcluidos] = useState('Nenhum hábito concluído ainda');
     const token = info.data.token;
     const [qtdConcluidos, setQtdConcluidos] = useState(0);
+    const { setPercent } = props;
 
     let diaSemana = dayjs().day();
     let diaMes = dayjs().date();
@@ -64,6 +68,8 @@ export default function Hoje() {
             if (qtd != 0) {
                 const porcentagem = Math.round(qtd * 100 / resposta.data.length);
                 setQtdConcluidos(qtd);
+                setPorcentagemInfo(porcentagem);
+                setPercent(porcentagem);
                 setConcluidos(`${porcentagem}% dos hábitos concluidos`);
             }
             setHabitos(resposta.data);
@@ -71,7 +77,6 @@ export default function Hoje() {
         requisicao.catch(resposta =>
             alert(resposta.response.data.message));
     }, []);
-
 
     function habitoFeito(id, done) {
         const body = {};
@@ -88,6 +93,8 @@ export default function Hoje() {
                     if (qtd != 0) {
                         const porcentagem = Math.round(qtd * 100 / resposta2.data.length);
                         setQtdConcluidos(qtd);
+                        setPorcentagemInfo(porcentagem);
+                        setPercent(porcentagem);
                         setConcluidos(`${porcentagem}% dos hábitos concluidos`);
                     }
                     setHabitos(resposta2.data);
@@ -110,6 +117,8 @@ export default function Hoje() {
                     if (qtd != 0) {
                         const porcentagem = Math.round(qtd * 100 / resposta2.data.length);
                         setQtdConcluidos(qtd);
+                        setPorcentagemInfo(porcentagem);
+                        setPercent(porcentagem);
                         setConcluidos(`${porcentagem}% dos hábitos concluidos`);
                     } else {
                         setQtdConcluidos(0);
@@ -165,7 +174,24 @@ export default function Hoje() {
                             <button data-test="habit-link">Hábitos</button>
                         </Link>
                         <Link to={'/hoje'}>
-                            <div className='hoje' data-test="today-link">Hoje</div>
+                            <div className="hoje" data-test="today-link">
+                                <CircularProgressbar
+                                    value={porcentagemInfo}
+                                    text={'Hoje'}
+                                    background={true}
+                                    backgroundPadding={8}
+                                    strokeWidth={6}
+                                    styles={buildStyles({
+                                        rotation: 0.25,
+                                        strokeLinecap: 'butt',
+                                        textSize: '16px',
+                                        pathColor: '#FFFFFF',
+                                        textColor: '#FFFFFF',
+                                        trailColor: '#d6d6d6',
+                                        backgroundColor: '#52B6FF',
+                                    })}
+                                />
+                            </div>
                         </Link>
                         <Link to={'/historico'}>
                             <button data-test="history-link">Histórico</button>

@@ -12,7 +12,8 @@ axios.defaults.headers.common['Authorization'] = '97eVqU1AsszfPTccPmhDFe5m';
 
 export default function App() {
   const [info, setInfo] = useState(Context);
-
+  const [percent, setPercent] = useState(0);
+  
   return (
     <>
     <Context.Provider value={ [info, setInfo] }>
@@ -20,9 +21,9 @@ export default function App() {
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/cadastro' element={<Cadastro/>} />
-            <Route path='/habitos' element={<Habitos />} />
-            <Route path='/hoje' element={<Hoje />} />
-            <Route path='/historico' element={<Historico />} />
+            <Route path='/habitos' element={<Habitos percent={percent}/>} />
+            <Route path='/hoje' element={<Hoje setPercent={setPercent}/>} />
+            <Route path='/historico' element={<Historico percent={percent}/>} />
           </Routes>
       </BrowserRouter>
     </Context.Provider>

@@ -5,9 +5,9 @@ import axios from 'axios';
 import { useContext } from 'react';
 import Context from '../../Context';
 import lixeira from '../.././assets/lixeira.png';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
-export default function Habitos() {
-
+export default function Habitos(props) {
     const [habitos, setHabitos] = useState([]);
     const [novoHabito, setNovoHabito] = useState('');
     const [botoesSelecionados, setBotoesSelecionados] = useState([]);
@@ -17,6 +17,7 @@ export default function Habitos() {
 
 
     const [info] = useContext(Context);
+    const { percent } = props;
     const token = info.data.token;
 
     const config = {
@@ -35,30 +36,33 @@ export default function Habitos() {
 
     function enviarHabito(event) {
         event.preventDefault();
-        setHabilitado(!habilitado);
-        const obj = {
-            name: novoHabito,
-            days: botoesSelecionados
-        }
-        if (obj.name == '') {
+        if (novoHabito == '') {
             alert('Campo vazio!');
         } else {
+            setHabilitado(!habilitado);
+            const obj = {
+                name: novoHabito,
+                days: botoesSelecionados
+            }
             const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', obj, config);
             requisicao.then(() => {
                 const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
                 requisicao2.then(resposta2 =>
                     setHabitos(resposta2.data));
+                setNovoHabito('');
+                setBotoesSelecionados([]);
                 requisicao2.catch(resposta2 =>
                     alert(resposta2.response.data.message));
                 setAdicionar(!adicionar);
+                setHabilitado(!habilitado);
             });
             requisicao.catch(resposta => {
                 alert(resposta.data.message);
+                setNovoHabito('');
+                setBotoesSelecionados([]);
+                setHabilitado(!habilitado);
             })
         }
-        setHabilitado(!habilitado);
-        setNovoHabito('');
-        setBotoesSelecionados([]);
     }
 
     function selecionarDia(id) {
@@ -71,6 +75,7 @@ export default function Habitos() {
             const novoArr = [...botoesSelecionados, id];
             setBotoesSelecionados(novoArr);
         }
+        console.log(botoesSelecionados);
     }
 
     function deletarHabito(h) {
@@ -162,7 +167,24 @@ export default function Habitos() {
                             <button data-test="habit-link">Hábitos</button>
                         </Link>
                         <Link to={'/hoje'}>
-                            <div className='hoje' data-test="today-link">Hoje</div>
+                            <div className='hoje' data-test="today-link">
+                                <CircularProgressbar
+                                    value={percent}
+                                    text={'Hoje'}
+                                    background={true}
+                                    backgroundPadding={8}
+                                    strokeWidth={6}
+                                    styles={buildStyles({
+                                        rotation: 0.25,
+                                        strokeLinecap: 'butt',
+                                        textSize: '16px',
+                                        pathColor: '#FFFFFF',
+                                        textColor: '#FFFFFF',
+                                        trailColor: '#d6d6d6',
+                                        backgroundColor: '#52B6FF',
+                                    })}
+                                />
+                            </div>
                         </Link>
                         <Link to={'/historico'}>
                             <button data-test="history-link">Histórico</button>

@@ -131,16 +131,10 @@ export const Footer = styled.div`
         font-size: 16px;
     }
     .hoje {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        bottom: 25px;
-        right: calc(50vw - 2em);
         position: absolute;
-        border-radius: 50%;
-        height: 5em;
-        width: 5em;
-        background-color: #52B6FF;
-        color: #FFFFFF;
+        width: 80px;
+        height: 80px;
+        bottom: 25px;
+        right: calc(50vw - 50px);
     }
 `

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import { PageContainer, FormContainer } from './styled';
@@ -29,6 +29,7 @@ export default function Login() {
         const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', obj);
         requisicao.then(resposta => {
             setInfo(resposta);
+            console.log(info)
             navegar('/hoje');
         });
         requisicao.catch(resposta => {
