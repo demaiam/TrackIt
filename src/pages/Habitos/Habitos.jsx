@@ -35,28 +35,28 @@ export default function Habitos() {
 
     function enviarHabito(event) {
         event.preventDefault();
-        setHabilitado(true);
+        setHabilitado(!habilitado);
         const obj = {
             name: novoHabito,
             days: botoesSelecionados
         }
         if (obj.name == '') {
             alert('Campo vazio!');
-            return;
+        } else {
+            const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', obj, config);
+            requisicao.then(() => {
+                const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
+                requisicao2.then(resposta2 =>
+                    setHabitos(resposta2.data));
+                requisicao2.catch(resposta2 =>
+                    alert(resposta2.response.data.message));
+                setAdicionar(!adicionar);
+            });
+            requisicao.catch(resposta => {
+                alert(resposta.data.message);
+            })
         }
-        const requisicao = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', obj, config);
-        requisicao.then(() => {
-            const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
-            requisicao2.then(resposta2 =>
-                setHabitos(resposta2.data));
-            requisicao2.catch(resposta2 =>
-                alert(resposta2.response.data.message));
-            setAdicionar(false);
-        });
-        requisicao.catch(resposta => {
-            alert(resposta.data.message);
-        })
-        setHabilitado(false);
+        setHabilitado(!habilitado);
         setNovoHabito('');
         setBotoesSelecionados([]);
     }
@@ -76,7 +76,7 @@ export default function Habitos() {
     function deletarHabito(h) {
         if (confirm("Tem certeza que deseja apagar o hábito?") == true) {
             const requisicao = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
-            requisicao.then(resposta => {
+            requisicao.then(() => {
                 const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
                 requisicao2.then(resposta2 =>
                     setHabitos(resposta2.data));
@@ -84,7 +84,7 @@ export default function Habitos() {
                     alert(resposta2.response.data.message));
             });
             requisicao.catch(resposta => {
-                alert(`Erro ao deletar Hábito! ${resposta.response.data.message}`);
+                alert(resposta.response.data.message);
             });
         }
     }

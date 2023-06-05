@@ -1,11 +1,10 @@
-import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, Botoes, BotaoDiaAdd, BotaoDia, BotoesSubmit, BotaoCheck, Footer } from './styled';
+import { ScreenContainer, HeaderContainer, Header, HabitosContainer, Habito, Topo, BotaoCheck, Footer } from './styled';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Context from '../../Context';
 import { useContext } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { ThreeDots } from 'react-loader-spinner';
 
 export default function Hoje() {
     const [info] = useContext(Context);
@@ -74,32 +73,56 @@ export default function Hoje() {
     }, []);
 
 
-    function habitoFeito(id, done, indice) {
+    function habitoFeito(id, done) {
         const body = {};
         if (!done) {
             const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, body, config);
             requisicao.then(() => {
-                auxFunc(1, indice);
+                const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
+                requisicao2.then(resposta2 => {
+                    let qtd = 0;
+                    for (let i = 0; i < resposta2.data.length; i++) {
+                        if (resposta2.data[i].done == true)
+                            qtd += 1;
+                    }
+                    if (qtd != 0) {
+                        const porcentagem = Math.round(qtd * 100 / resposta2.data.length);
+                        setQtdConcluidos(qtd);
+                        setConcluidos(`${porcentagem}% dos hábitos concluidos`);
+                    }
+                    setHabitos(resposta2.data);
+                });
+                requisicao2.catch(resposta =>
+                    alert(resposta.response.data.message));
             });
             requisicao.catch(resposta =>
-                alert(`Não foi possível marcar o hábito! ${resposta.response.data.message}`));
+                alert(resposta.response.data.message));
         } else {
             const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, body, config);
             requisicao.then(() => {
-                auxFunc(-1, indice);
+                const requisicao2 = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
+                requisicao2.then(resposta2 => {
+                    let qtd = 0;
+                    for (let i = 0; i < resposta2.data.length; i++) {
+                        if (resposta2.data[i].done == true)
+                            qtd += 1;
+                    }
+                    if (qtd != 0) {
+                        const porcentagem = Math.round(qtd * 100 / resposta2.data.length);
+                        setQtdConcluidos(qtd);
+                        setConcluidos(`${porcentagem}% dos hábitos concluidos`);
+                    } else {
+                        setQtdConcluidos(0);
+                        setConcluidos('Nenhum hábito concluído ainda');
+                    }
+                    setHabitos(resposta2.data);
+                });
+                requisicao2.catch(resposta =>
+                    alert(resposta.response.data.message));
             });
             requisicao.catch(resposta =>
-                alert(`Não foi possível marcar o hábito! ${resposta.response.data.message}`));
+                alert(resposta.response.data.message));
         }
-    }
-
-    function auxFunc(num, indice) {
-        const novoArr = [...habitos];
-        novoArr[indice].done = !(novoArr[indice].done);
-        setHabitos(novoArr);
-        setQtdConcluidos(qtdConcluidos + num);
-        const porcentagem = Math.round(qtdConcluidos * 100 / habitos.length);
-        setConcluidos(`${porcentagem}% dos hábitos concluidos`);
     }
 
     return (
@@ -128,7 +151,7 @@ export default function Hoje() {
                                 <p data-test="today-habit-sequence">Sequência atual: <span>{h.currentSequence}</span></p>
                                 <p data-test="today-habit-record">Seu recorde: <span>{h.highestSequence}</span></p>
                                 <BotaoCheck status={h.done}>
-                                    <button onClick={() => habitoFeito(h.id, h.done, index)} data-test="today-habit-check-btn">✓</button>
+                                    <button onClick={() => habitoFeito(h.id, h.done)} data-test="today-habit-check-btn">✓</button>
                                 </BotaoCheck>
                             </Habito>
                         </div>

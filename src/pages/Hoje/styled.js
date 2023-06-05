@@ -73,23 +73,7 @@ export const Habito = styled.div`
         line-height: 1px;
     }
     span {
-        color: ${ props => props.recorde == props.sequencia ? '#8FC549' : '#666666'};
-    }
-`
-
-export const BotaoCheck = styled.div`
-    position: absolute;
-    display: flex;
-    align-self: flex-end;
-    margin-top: 13px;
-    button {
-        color: #FFFFFF;
-        font-size: 40px;
-        width: 70px;
-        height: 70px;
-        background-color: ${ props => props.status ? '#8FC549' : '#EBEBEB'};
-        border: none;
-        border-radius: 5px;
+        color: ${ props => (props.recorde == props.sequencia && props.recorde != 0) ? '#8FC549' : '#666666'};
     }
 `
 
@@ -108,52 +92,19 @@ export const Topo = styled.div`
         color: ${props => props.status == 0 ? '#BABABA' : '#8FC549'};
     }
 `
-
-export const Botoes = styled.div`
+export const BotaoCheck = styled.div`
+    position: absolute;
     display: flex;
-    margin-top: 10px;
-    gap: 5px;
-`
-
-export const BotaoDiaAdd = styled.div`
-    display: flex;
+    align-self: flex-end;
+    margin-top: 13px;
     button {
-        height: 25px;
-        width: 25px;
-        border: ${props => props.selecionado.includes(props.indice) ? '1px solid #FFFFFF' : '1px solid #DBDBDB'};
-        color: ${props => props.selecionado.includes(props.indice) ? '#FFFFFF' : '#DBDBDB'};
-        background-color: ${props => props.selecionado.includes(props.indice) ? '#DBDBDB' : '#FFFFFF'};
-    }
-`
-
-export const BotaoDia = styled.div`
-    display: flex;
-    button {
-        height: 25px;
-        width: 25px;
-    }
-`
-
-export const BotoesSubmit = styled.div`
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    button {
-        cursor: pointer;
-    }
-    button:nth-child(1) {
-        border: none;
-        background-color: #FFFFFF;
-        color: #52B6FF;
-    }
-    button:nth-child(2) {
         color: #FFFFFF;
-        width: 5em;
-        height: 2em;
+        font-size: 40px;
+        width: 70px;
+        height: 70px;
+        background-color: ${ props => props.status ? '#8FC549' : '#EBEBEB'};
         border: none;
         border-radius: 5px;
-        background-color: #52B6FF;
     }
 `
 
