@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useContext } from 'react';
 import Context from '../../Context';
 import lixeira from '../.././assets/lixeira.png';
-import { ThreeDots } from 'react-loader-spinner';
 
 export default function Habitos() {
 
@@ -89,9 +88,6 @@ export default function Habitos() {
             });
         }
     }
-
-    console.log(habitos)
-
 
     return (
         <>

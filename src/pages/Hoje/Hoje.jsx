@@ -102,62 +102,54 @@ export default function Hoje() {
         setConcluidos(`${porcentagem}% dos hábitos concluidos`);
     }
 
-    if (habitos.length == 0) {
-        return (
-            <>
-                <ThreeDots height="100vh" width="100vw" color="#52B6FF" />
-            </>
-        )
-    } else {
-        return (
-            <>
-                <ScreenContainer>
-                    <HeaderContainer>
-                        <Header>
-                            <div data-test="header">
-                                <a>Trackit</a>
-                                <img src={info.data.image} alt="pfp" data-test="avatar" />
-                            </div>
-                        </Header>
-                    </HeaderContainer>
-
-                    <HabitosContainer>
-
-                        <Topo status={qtdConcluidos}>
-                            <a data-test="today">{diaSemana}, {diaMes}/{mes}</a>
-                            <a data-test="today-counter">{concluidos}</a>
-                        </Topo>
-
-                        {habitos.map((h, index) => (
-                            <div className="habito-container" data-test="today-habit-container" key={index}>
-                                <Habito recorde={h.highestSequence} sequencia={h.currentSequence}>
-                                    <p data-test="today-habit-name">{h.name}</p>
-                                    <p data-test="today-habit-sequence">Sequência atual: <span>{h.currentSequence}</span></p>
-                                    <p data-test="today-habit-record">Seu recorde: <span>{h.highestSequence}</span></p>
-                                    <BotaoCheck status={h.done}>
-                                        <button onClick={() => habitoFeito(h.id, h.done, index)} data-test="today-habit-check-btn">✓</button>
-                                    </BotaoCheck>
-                                </Habito>
-                            </div>
-                        ))}
-
-                    </HabitosContainer>
-
-                    <Footer>
-                        <div data-test="menu">
-                            <Link to={'/habitos'}>
-                                <button data-test="habit-link">Hábitos</button>
-                            </Link>
-                            <Link to={'/hoje'}>
-                                <div className='hoje' data-test="today-link">Hoje</div>
-                            </Link>
-                            <Link to={'/historico'}>
-                                <button data-test="history-link">Histórico</button>
-                            </Link>
+    return (
+        <>
+            <ScreenContainer>
+                <HeaderContainer>
+                    <Header>
+                        <div data-test="header">
+                            <a>Trackit</a>
+                            <img src={info.data.image} alt="pfp" data-test="avatar" />
                         </div>
-                    </Footer>
-                </ScreenContainer>
-            </>
-        );
-    }
+                    </Header>
+                </HeaderContainer>
+
+                <HabitosContainer>
+
+                    <Topo status={qtdConcluidos}>
+                        <a data-test="today">{diaSemana}, {diaMes}/{mes}</a>
+                        <a data-test="today-counter">{concluidos}</a>
+                    </Topo>
+
+                    {habitos.map((h, index) => (
+                        <div className="habito-container" data-test="today-habit-container" key={index}>
+                            <Habito recorde={h.highestSequence} sequencia={h.currentSequence}>
+                                <p data-test="today-habit-name">{h.name}</p>
+                                <p data-test="today-habit-sequence">Sequência atual: <span>{h.currentSequence}</span></p>
+                                <p data-test="today-habit-record">Seu recorde: <span>{h.highestSequence}</span></p>
+                                <BotaoCheck status={h.done}>
+                                    <button onClick={() => habitoFeito(h.id, h.done, index)} data-test="today-habit-check-btn">✓</button>
+                                </BotaoCheck>
+                            </Habito>
+                        </div>
+                    ))}
+
+                </HabitosContainer>
+
+                <Footer>
+                    <div data-test="menu">
+                        <Link to={'/habitos'}>
+                            <button data-test="habit-link">Hábitos</button>
+                        </Link>
+                        <Link to={'/hoje'}>
+                            <div className='hoje' data-test="today-link">Hoje</div>
+                        </Link>
+                        <Link to={'/historico'}>
+                            <button data-test="history-link">Histórico</button>
+                        </Link>
+                    </div>
+                </Footer>
+            </ScreenContainer>
+        </>
+    );
 }
